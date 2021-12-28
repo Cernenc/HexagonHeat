@@ -18,6 +18,21 @@ namespace Assets.Scripts.RulesSet
             RecentlyUsedRuleSet = new List<IRules>();
         }
 
+        public void ShuffleRuleSet()
+        {
+            if (Rules.Count < 3)
+            {
+                return;
+            }
+
+            AddToRecentlyUsedRuleSet(Rules);
+            CleanCurrentSet();
+
+            CurrentRuleSet = ModifiedCurrentRuleSet();
+
+            ValidateCurrentRuleSet();
+        }
+
         private void AddToRecentlyUsedRuleSet(List<IRules> rules)
         {
             if(CurrentRuleSet.Count == 0)
@@ -54,32 +69,6 @@ namespace Assets.Scripts.RulesSet
             }
         }
 
-        public void ShuffleRuleSet()
-        {
-            if(Rules.Count < 3)
-            {
-                return;
-            }
-
-            AddToRecentlyUsedRuleSet(Rules);
-            CleanCurrentSet();
-
-            CurrentRuleSet = ModifiedCurrentRuleSet();
-
-            ValidateCurrentRuleSet();
-        }
-
-        private void ValidateCurrentRuleSet()
-        {
-            if(CurrentRuleSet.Count != 3)
-            {
-                UnityEngine.Debug.Log("Current Set: " + CurrentRuleSet.Count);
-                return;
-            }
-
-            OnChooseRuleSet?.Invoke();
-        }
-
         private HashSet<IRules> ModifiedCurrentRuleSet()
         {
             HashSet<IRules> currentRuleSet = new HashSet<IRules>();
@@ -98,6 +87,17 @@ namespace Assets.Scripts.RulesSet
             }
 
             return currentRuleSet;
+        }
+
+        private void ValidateCurrentRuleSet()
+        {
+            if (CurrentRuleSet.Count != 3)
+            {
+                UnityEngine.Debug.Log("Current Set: " + CurrentRuleSet.Count);
+                return;
+            }
+
+            OnChooseRuleSet?.Invoke();
         }
     }
 }

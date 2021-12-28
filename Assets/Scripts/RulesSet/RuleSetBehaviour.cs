@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.RulesSet.Rules;
+﻿using Assets.Scripts.Managers;
+using Assets.Scripts.RulesSet.Rules;
 using Assets.Scripts.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,7 +15,9 @@ namespace Assets.Scripts.RulesSet
         [field: SerializeField]
         private UnityEvent OnChooseRuleSet { get; set; }
 
-        private void Start()
+        public GameManager gameManager { private get; set; }
+
+        private void Awake()
         {
             RuleSet = new RuleSet();
             RuleSet.Rules.Add(new RuleNoJump());
@@ -22,9 +25,7 @@ namespace Assets.Scripts.RulesSet
             RuleSet.Rules.Add(new Rule3());
             RuleSet.Rules.Add(new Rule4());
             RuleSet.Rules.Add(new Rule5());
-
             RuleSet.OnChooseRuleSet += HandleChooseRuleSet;
-            ShuffleAndRun();
         }
 
         private void HandleChooseRuleSet()
@@ -34,7 +35,7 @@ namespace Assets.Scripts.RulesSet
                 rule.Rule();
             }
 
-            Timer.TimerBehaviour timer = FindObjectOfType<Timer.TimerBehaviour>();
+            Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 3f;
             timer.TimerSetup();
             timer.OnTimerEnd = new UnityEvent();

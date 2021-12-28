@@ -9,7 +9,7 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskColor : ITask
     {
-        public void Task(HexCell[] cells)
+        public void Task(HexCell[] cells, List<HexCell> taskCells)
         {
             UnityEngine.Debug.Log("Task Color");
         }

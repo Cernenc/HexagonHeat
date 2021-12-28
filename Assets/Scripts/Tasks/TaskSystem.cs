@@ -9,13 +9,15 @@ namespace Assets.Scripts.Tasks
     {
         public HexGrid Grid { private get; set; }
         public List<ITask> Tasks { get; set; }
-        public Action OnChooseTask { get; set; }
+        public List<HexCell> CellsToDrop { get; set; }
+        public Action OnTaskChosen { get; set; }
         public TaskSystem()
         {
             Tasks = new List<ITask>();
             Tasks.Add(new TaskNumber());
             Tasks.Add(new TaskColor());
             Tasks.Add(new TaskZero());
+            CellsToDrop = new List<HexCell>();
         }
 
         public void ChooseTask()
@@ -26,9 +28,8 @@ namespace Assets.Scripts.Tasks
             }
 
             var chosenTasks = ModifiedTasks();
-            //chosenTasks.First().Task(Grid.Cells);
-
-            OnChooseTask?.Invoke();
+            chosenTasks.First().Task(Grid.Cells, CellsToDrop);
+            OnTaskChosen?.Invoke();
         }
 
         private HashSet<ITask> ModifiedTasks()
@@ -36,7 +37,8 @@ namespace Assets.Scripts.Tasks
             HashSet<ITask> chosenTasks = new HashSet<ITask>();
             Random random = new Random();
             int randomIndex = random.Next(Tasks.Count);
-            chosenTasks.Add(Tasks[randomIndex]);
+            //chosenTasks.Add(Tasks[randomIndex]);
+            chosenTasks.Add(new TaskNumber());
 
             return chosenTasks;
         }

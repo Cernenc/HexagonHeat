@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Hexagons;
+using Assets.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,15 +14,15 @@ namespace Assets.Scripts.Tasks
         private TaskSystem TaskSystem { get; set; }
 
         [field: SerializeField]
-        private UnityEvent OnChooseTask { get; set; }
+        private UnityEvent OnTaskChosen { get; set; }
+
+        public GameManager gameManager { private get; set; }
 
         private void Start()
         {
             TaskSystem = new TaskSystem();
             TaskSystem.Grid = _grid;
-            TaskSystem.OnChooseTask += HandleChosenTask;
-
-            _drop = new HexagonDrop();
+            TaskSystem.OnTaskChosen += HandleChosenTask;
         }
 
         public void ChooseTask()
@@ -31,14 +32,16 @@ namespace Assets.Scripts.Tasks
 
         private void HandleChosenTask()
         {
-            Timer.TimerBehaviour timer = FindObjectOfType<Timer.TimerBehaviour>();
+            _drop = new HexagonDrop();
+            _drop.Drops = TaskSystem.CellsToDrop;
+            Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 5f;
             timer.TimerSetup();
             timer.OnTimerEnd = new UnityEvent();
             timer.OnTimerEnd.RemoveAllListeners();
             timer.OnTimerEnd.AddListener(_drop.Drop);
 
-            OnChooseTask.Invoke();
+            OnTaskChosen.Invoke();
         }
     }
 }

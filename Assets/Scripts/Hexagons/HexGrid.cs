@@ -32,10 +32,10 @@ namespace Assets.Scripts.Hexagons {
             CreateCell(0, 0, 0);
             CreateCell(1, 1, 0);
             CreateCell(2, -1, 0);
-            CreateCell(3, 0.5f, 0.5f);
-            CreateCell(4, 0.5f, -0.5f);
-            CreateCell(5, -0.5f, 0.5f);
-            CreateCell(6, -0.5f, -0.5f);
+            CreateCell(3, 0.5f, 1f);
+            CreateCell(4, 0.5f, -1f);
+            CreateCell(5, -0.5f, 1f);
+            CreateCell(6, -0.5f, -1f);
         }
 
         private void Start()
@@ -49,14 +49,18 @@ namespace Assets.Scripts.Hexagons {
         private void CreateCell(int i, float x, float z)
         {
             Vector3 position = new Vector3();
-            position.x = x * (HexMetric.innerRadius * 2);
+            position.x = x * HexMetric.innerRadius;
             position.y = 0;
-            position.z = z * (HexMetric.outerRadius * 2f);
+            position.z = z * HexMetric.outerRadius;
 
             HexCell cell = Cells[i] = Instantiate(CellPrefab);
             cell.HexNumber = i;
-            cell.transform.SetParent(transform, false);
+            cell.transform.SetParent(transform, true);
             cell.transform.localPosition = position;
+
+            BoxCollider box = cell.gameObject.AddComponent<BoxCollider>();
+            box.center = cell.transform.position;
+            box.size = new Vector3(18, 1, 18);
 
             Text label = Instantiate<Text>(HexCellInformation);
             label.rectTransform.SetParent(HexCellCanvas.transform, false);
