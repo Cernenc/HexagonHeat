@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HexagonDrop
 {
-    public List<HexCell> Drops { get; set; }
+    public HashSet<HexCell> Drops { get; set; }
     public void Drop()
     {
         Debug.Log("Drop");

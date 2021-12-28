@@ -6,7 +6,8 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskNumber : ITask
     {
-        public void Task(HexCell[] cells, List<HexCell> cellsToDrop)
+        private string _selectedFields = "";
+        public void Task(HexCell[] cells, HashSet<HexCell> cellsToDrop)
         {
             Random random = new Random();
             bool isEven = random.Next(1, 2) == 1;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Tasks
                         cellsToDrop.Add(cell);
                     }
                 }
+                _selectedFields += "even";
             }
             else
             {
@@ -39,12 +41,13 @@ namespace Assets.Scripts.Tasks
                         cellsToDrop.Add(cell);
                     }
                 }
+                _selectedFields += "uneven";
             }
-
-            foreach(var task in cellsToDrop)
-            {
-                UnityEngine.Debug.Log(task.HexNumber);
-            }
+            UnityEngine.Debug.Log(ToString());
+        }
+        public override string ToString()
+        {
+            return $"All {_selectedFields} fields";
         }
     }
 }

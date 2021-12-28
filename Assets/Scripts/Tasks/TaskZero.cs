@@ -9,7 +9,7 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskZero : ITask
     {
-        public void Task(HexCell[] cells, List<HexCell> taskCells)
+        public void Task(HexCell[] cells, HashSet<HexCell> taskCells)
         {
             UnityEngine.Debug.Log("Zero Task");
         }

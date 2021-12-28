@@ -9,9 +9,34 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskColor : ITask
     {
-        public void Task(HexCell[] cells, List<HexCell> taskCells)
+        private string _selectedCells = "";
+        public void Task(HexCell[] cells, HashSet<HexCell> cellsToDrop)
         {
-            UnityEngine.Debug.Log("Task Color");
+            Random random;
+            int[] randomColorIndeces = new int[3];
+            for(int i = 0; i<3; i++)
+            {
+                random = new Random();
+                randomColorIndeces[i] = random.Next(0, ColorCheck.HexCellColors.Length);
+            }
+            for(int i = 0; i < cells.Length; i++)
+            {
+                for(int j = 0; j < randomColorIndeces.Length; j++)
+                {
+                    if (cells[i].HexColor.Equals(ColorCheck.HexCellColors[randomColorIndeces[j]].ToString()))
+                    {
+                        cellsToDrop.Add(cells[i]);
+                        _selectedCells += cells[i].HexColor.ToString() + " ";
+                    }
+                }
+            }
+
+            UnityEngine.Debug.Log(ToString());
+        }
+
+        public override string ToString()
+        {
+            return $"Colors {_selectedCells}";
         }
     }
 }
