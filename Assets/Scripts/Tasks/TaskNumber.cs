@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Hexagons;
-using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Tasks
@@ -7,20 +6,24 @@ namespace Assets.Scripts.Tasks
     public class TaskNumber : ITask
     {
         private string _selectedFields = "";
-        public void Task(HexCell[] cells, HashSet<HexCell> cellsToDrop)
+        public void Task(HexCell[] cells, List<HexCell> cellsToDrop, ref List<HexCell> temps)
         {
-            Random random = new Random();
-            bool isEven = random.Next(1, 2) == 1;
-            UnityEngine.Debug.Log($"is even: {isEven}");
-            
-            if (isEven)
+            int number = RandomGenerator.RandomNumber(0, 2);
+            if (number == 0)
             {
                 foreach(var cell in cells)
                 {
-                    if(cell.HexNumber == 0)
+                    if(cell.HexNumber != 0)
                     {
-                        continue;
+                        cellsToDrop.Add(cell);
                     }
+                }
+                _selectedFields = "zero";
+            }
+            else if (number == 2)
+            {
+                foreach(var cell in cells)
+                {
                     if(cell.HexNumber % 2 != 0)
                     {
                         cellsToDrop.Add(cell);
@@ -32,10 +35,6 @@ namespace Assets.Scripts.Tasks
             {
                 foreach (var cell in cells)
                 {
-                    if(cell.HexNumber == 0)
-                    {
-                        continue;
-                    }
                     if (cell.HexNumber % 2 == 0)
                     {
                         cellsToDrop.Add(cell);
@@ -47,7 +46,7 @@ namespace Assets.Scripts.Tasks
         }
         public override string ToString()
         {
-            return $"All {_selectedFields} fields";
+            return $"Safe: All {_selectedFields} fields";
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Assets.Scripts.Tasks
 {
     public interface ITask
     {
-        void Task(HexCell[] cells, HashSet<HexCell> taskCells);
+        void Task(HexCell[] cells, List<HexCell> taskCells, ref List<HexCell> temps);
     }
 }

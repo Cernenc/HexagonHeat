@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerAttributeManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RandomGenerator.cs" />
     <Compile Include="Assets\Scripts\RulesSet\IRules.cs" />
     <Compile Include="Assets\Scripts\RulesSet\RuleSet.cs" />
     <Compile Include="Assets\Scripts\RulesSet\RuleSetBehaviour.cs" />

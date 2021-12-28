@@ -9,7 +9,8 @@ namespace Assets.Scripts.Tasks
     {
         public HexGrid Grid { private get; set; }
         public List<ITask> Tasks { get; set; }
-        public HashSet<HexCell> CellsToDrop { get; set; }
+        public List<HexCell> CellsToDrop { get; set; }
+        public List<HexCell> Temps;
         public Action OnTaskChosen { get; set; }
         public TaskSystem()
         {
@@ -17,7 +18,8 @@ namespace Assets.Scripts.Tasks
             Tasks.Add(new TaskNumber());
             Tasks.Add(new TaskColor());
             Tasks.Add(new TaskZero());
-            CellsToDrop = new HashSet<HexCell>();
+            CellsToDrop = new List<HexCell>();
+            Temps = new List<HexCell>();
         }
 
         public void ChooseTask()
@@ -28,17 +30,28 @@ namespace Assets.Scripts.Tasks
             }
 
             var chosenTasks = ModifiedTasks();
-            chosenTasks.First().Task(Grid.Cells, CellsToDrop);
+            foreach(var task in chosenTasks)
+            {
+                task.Task(Grid.Cells, CellsToDrop, ref Temps);
+            }
             OnTaskChosen?.Invoke();
         }
 
         private HashSet<ITask> ModifiedTasks()
         {
             HashSet<ITask> chosenTasks = new HashSet<ITask>();
-            Random random = new Random();
-            int randomIndex = random.Next(Tasks.Count);
-            //chosenTasks.Add(Tasks[randomIndex]);
-            chosenTasks.Add(new TaskColor());
+            int i = 0;
+            while(i < 3)
+            {
+                int randomIndex = RandomGenerator.RandomNumber(0, Tasks.Count);
+                chosenTasks.Add(Tasks[randomIndex]);
+                i++;
+
+                if(chosenTasks.Count != i)
+                {
+                    --i;
+                }
+            }
 
             return chosenTasks;
         }

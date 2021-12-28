@@ -72,11 +72,11 @@ namespace Assets.Scripts.RulesSet
         private HashSet<IRules> ModifiedCurrentRuleSet()
         {
             HashSet<IRules> currentRuleSet = new HashSet<IRules>();
-            Random random = new Random();
+            
             int i = 0;
             while (i < 3)
             {
-                int randomIndex = random.Next(Rules.Count);
+                int randomIndex = RandomGenerator.RandomNumber(0, Rules.Count);
                 currentRuleSet.Add(Rules[randomIndex]);
                 i++;
 

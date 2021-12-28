@@ -13,6 +13,8 @@ namespace Assets.Scripts.Managers
         [field: SerializeField]
         private TaskSystemBehaviour TaskSystem { get; set; }
 
+        [field: SerializeField]
+        private HexagonDrop Drop { get; set; }
         public TimerBehaviour Timer { get; private set; }
 
         public void Start()
@@ -22,6 +24,11 @@ namespace Assets.Scripts.Managers
             TaskSystem.gameManager = this;
 
             RuleSet.ShuffleAndRun();
+        }
+
+        public void ResetRound()
+        {
+
         }
     }
 }
