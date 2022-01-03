@@ -22,6 +22,11 @@ namespace Assets.Scripts.Tasks
 
         private void Start()
         {
+            Setup();
+        }
+
+        public void Setup()
+        {
             TaskSystem = new TaskSystem();
             TaskSystem.Grid = _grid;
             TaskSystem.OnTaskChosen += HandleChosenTask;
@@ -34,7 +39,7 @@ namespace Assets.Scripts.Tasks
 
         private void HandleChosenTask()
         {
-            _drop = new HexagonDrop();
+            _drop = gameManager.Drop;
             _drop.Drops = new HashSet<HexCell>();
 
             TaskSystem.Temps.ForEach(item => TaskSystem.CellsToDrop.Add(item));
@@ -49,7 +54,7 @@ namespace Assets.Scripts.Tasks
                 _drop.Drops.Add(duplicate);
             }
             Timer.TimerBehaviour timer = gameManager.Timer;
-            timer.Duration = 5f;
+            timer.Duration = 2f;
             timer.TimerSetup();
             timer.OnTimerEnd = new UnityEvent();
             timer.OnTimerEnd.RemoveAllListeners();

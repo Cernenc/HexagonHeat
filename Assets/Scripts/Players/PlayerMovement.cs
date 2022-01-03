@@ -13,7 +13,7 @@ namespace Assets.Scripts.Players
         [field: SerializeField]
         private Transform GroundCheck { get; set; }
         public float GroundDistance { get; } = 0.4f;
-        
+        private bool _isGrounded = false;
 
         public CharacterController Controller { get; set; }
 
@@ -24,9 +24,20 @@ namespace Assets.Scripts.Players
 
         public void Update()
         {
-            //_isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance);
+            _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance);
             Movement();
             PlayerGravity();
+        }
+
+        private void Jump()
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+
+            }
+            if (_isGrounded)
+            {
+            }
         }
 
         private void Movement()

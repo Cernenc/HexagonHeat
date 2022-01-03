@@ -51,7 +51,7 @@ namespace Assets.Scripts.Hexagons {
             Vector3 position = new Vector3();
             position.x = x * HexMetric.innerRadius;
             position.y = 0;
-            position.z = z * HexMetric.outerRadius;
+            position.z = z * HexMetric.outerRadius * 0.75f;
 
             HexCell cell = Cells[i] = Instantiate(CellPrefab);
             cell.HexNumber = i;

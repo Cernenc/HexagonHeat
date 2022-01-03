@@ -5,6 +5,13 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskNumber : ITask
     {
+        public TaskNumber()
+        {
+            if(_selectedFields != "")
+            {
+                _selectedFields = "";
+            }
+        }
         private string _selectedFields = "";
         public void Task(HexCell[] cells, List<HexCell> cellsToDrop, ref List<HexCell> temps)
         {

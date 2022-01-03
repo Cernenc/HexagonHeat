@@ -11,7 +11,7 @@ namespace Assets.Scripts.Tasks
         public void Task(HexCell[] cells, List<HexCell> cellsToDrop, ref List<HexCell> temps)
         {
             Color[] colors = new Color[3];
-            int numberColors = RandomGenerator.RandomNumber(0, 0);
+            int numberColors = RandomGenerator.RandomNumber(0, 3);
             int[] numbers = new int[numberColors];
             if(numbers.Length == 0)
             {
