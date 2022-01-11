@@ -19,10 +19,8 @@ namespace Assets.Scripts.Managers
         {
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
-            if (horizontal != 0 || vertical != 0)
-            {
-                playerManager.OnMoveInput.Invoke(horizontal, vertical);
-            }
+            
+            playerManager.OnMoveInput.Invoke(horizontal, vertical);
         }
 
         public void JumpInput()

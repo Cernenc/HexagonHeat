@@ -56,7 +56,7 @@ namespace Assets.Scripts.Tasks
 
             Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 2f;
-            //timer.TimerSetup(_drop.Drop);
+            timer.TimerSetup(_drop.Drop);
 
             OnTaskChosen.Invoke();
         }

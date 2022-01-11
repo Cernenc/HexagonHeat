@@ -6,7 +6,10 @@ namespace Assets.Scripts.Players
     public class PlayerAttributeManager : ScriptableObject
     {
         [field: SerializeField]
-        public float Speed { get; set; }
+        public float GroundSpeed { get; set; }
+
+        [field: SerializeField]
+        public float AirSpeed { get; set; }
 
         [field: SerializeField]
         public float MaxJumpHeight { get; set; }

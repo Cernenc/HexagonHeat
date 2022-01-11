@@ -8,9 +8,9 @@ namespace Assets.Scripts.Players
     public class PlayerMovement : MonoBehaviour, IPlayer
     {
         private Vector3 _currentMovement;
-        private Vector3 _velocity;
         private float _gravity = -9.8f;
         private float _groundedGravity = -0.5f;
+        private float _initialJumpVelocity;
 
         [field: SerializeField]
         public PlayerAttributeManager AttributeManager { get; set; }
@@ -22,8 +22,9 @@ namespace Assets.Scripts.Players
             PlayerManager manager = FindObjectOfType<PlayerManager>();
             manager.Player = this;
 
-            float timeToApex = AttributeManager.MaxJumpHeight / 2;
+            float timeToApex = AttributeManager.MaxJumpTime / 2;
             _gravity = (-2 * AttributeManager.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
+            _initialJumpVelocity = (2 * AttributeManager.MaxJumpHeight) / timeToApex;
         }
 
         private void Start()
@@ -33,20 +34,27 @@ namespace Assets.Scripts.Players
 
         public void Update()
         {
+            Controller.Move(_currentMovement * Time.deltaTime);
             HandlePlayerGravity();
         }
 
         public void Movement(float horizontal, float vertical)
         {
-            Vector3 movement = new Vector3(horizontal, 0, vertical) * AttributeManager.Speed * Time.deltaTime;
-
-            Controller.Move(movement);
+            if (Controller.isGrounded)
+            {
+                _currentMovement.x = horizontal * AttributeManager.GroundSpeed;
+                _currentMovement.z = vertical * AttributeManager.GroundSpeed;
+            }
+            else
+            {
+                _currentMovement.x = horizontal * AttributeManager.AirSpeed;
+                _currentMovement.z = vertical * AttributeManager.AirSpeed;
+            }
         }
 
         public void Jump()
         {
-            _velocity.y += Mathf.Sqrt(AttributeManager.MaxJumpHeight * -3.0f * Gravity.GravityValue);
-            Controller.Move(_velocity * Time.deltaTime);
+            _currentMovement.y = _initialJumpVelocity;
         }
 
         private void HandlePlayerGravity()
@@ -57,10 +65,8 @@ namespace Assets.Scripts.Players
             }
             else
             {
-                _currentMovement.y = _gravity;
+                _currentMovement.y += _gravity * Time.deltaTime;
             }
-
-            Controller.Move(_currentMovement * Time.deltaTime);
         }
     }
 }
