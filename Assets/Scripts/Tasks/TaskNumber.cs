@@ -15,7 +15,7 @@ namespace Assets.Scripts.Tasks
         private string _selectedFields = "";
         public void Task(HexCell[] cells, List<HexCell> cellsToDrop, ref List<HexCell> temps)
         {
-            int number = RandomGenerator.RandomNumber(0, 2);
+            int number = RandomGenerator.RandomNumber(0, 6); //0 => 0; 1-3 => even; 4-6 => uneven
             if (number == 0)
             {
                 foreach(var cell in cells)
@@ -25,35 +25,36 @@ namespace Assets.Scripts.Tasks
                         cellsToDrop.Add(cell);
                     }
                 }
-                _selectedFields = "zero";
+                _selectedFields = "Field zero";
             }
-            else if (number == 2)
+            else if (number > 0 && number < 4)
             {
                 foreach(var cell in cells)
                 {
-                    if(cell.HexNumber % 2 != 0)
+                    if(cell.HexNumber % 2 != 0 || cell.HexNumber == 0)
                     {
                         cellsToDrop.Add(cell);
                     }
                 }
-                _selectedFields += "even";
+                _selectedFields = "All even fields";
             }
             else
             {
                 foreach (var cell in cells)
                 {
-                    if (cell.HexNumber % 2 == 0)
+                    if (cell.HexNumber % 2 == 0 || cell.HexNumber == 0)
                     {
                         cellsToDrop.Add(cell);
                     }
                 }
-                _selectedFields += "uneven";
+                _selectedFields = "All uneven fields";
             }
             UnityEngine.Debug.Log(ToString());
         }
+
         public override string ToString()
         {
-            return $"Safe: All {_selectedFields} fields";
+            return $"Safe: {_selectedFields}";
         }
     }
 }

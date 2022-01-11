@@ -20,11 +20,15 @@ namespace Assets.Scripts.Timer
             TimerIsStarting = false;
         }
 
-        public void TimerSetup()
+        public void TimerSetup(UnityAction action = null)
         {
             _timer = new Timer();
             _timer.RemainingSeconds = Duration;
             _timer.OnTimerEnd += HandleTimerEnd;
+            OnTimerEnd = new UnityEvent();
+            OnTimerEnd.RemoveAllListeners();
+            OnTimerEnd.AddListener(action);
+            StartTimer();
         }
 
         private void HandleTimerEnd()

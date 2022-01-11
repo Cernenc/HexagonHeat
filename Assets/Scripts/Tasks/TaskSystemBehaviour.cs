@@ -46,19 +46,17 @@ namespace Assets.Scripts.Tasks
             
             var duplicates = TaskSystem.CellsToDrop
                 .GroupBy(i => i)
-                .Where(g => g.Count() > TaskSystem.Tasks.Count - 2)
+                .Where(g => g.Count() > 1)
                 .Select(g => g.Key);
 
             foreach(var duplicate in duplicates)
             {
                 _drop.Drops.Add(duplicate);
             }
+
             Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 2f;
-            timer.TimerSetup();
-            timer.OnTimerEnd = new UnityEvent();
-            timer.OnTimerEnd.RemoveAllListeners();
-            timer.OnTimerEnd.AddListener(_drop.Drop);
+            //timer.TimerSetup(_drop.Drop);
 
             OnTaskChosen.Invoke();
         }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.RulesSet.Rules
     {
         public void Rule()
         {
-            UnityEngine.Debug.Log("Rule5");
+            //UnityEngine.Debug.Log("Rule5");
         }
     }
 }

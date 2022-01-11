@@ -36,11 +36,8 @@ namespace Assets.Scripts.RulesSet
             }
 
             Timer.TimerBehaviour timer = gameManager.Timer;
-            timer.Duration = 3f;
-            timer.TimerSetup();
-            timer.OnTimerEnd = new UnityEvent();
-            timer.OnTimerEnd.RemoveAllListeners();
-            timer.OnTimerEnd.AddListener(_taskSystem.ChooseTask);
+            timer.Duration = 1.5f;
+            timer.TimerSetup(_taskSystem.ChooseTask);
             OnChooseRuleSet.Invoke();
         }
 

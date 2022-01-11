@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : GameBehaviour
     {
         [field: SerializeField]
         private RuleSetBehaviour RuleSet { get; set; }
@@ -29,11 +29,7 @@ namespace Assets.Scripts.Managers
         private void HandleTaskEnd()
         {
             Timer.Duration = 2f;
-            Timer.TimerSetup();
-            Timer.OnTimerEnd = new UnityEvent();
-            Timer.OnTimerEnd.RemoveAllListeners();
-            Timer.OnTimerEnd.AddListener(NextRound);
-            Timer.StartTimer();
+            Timer.TimerSetup(NextRound);
         }
 
         private void Reset()
@@ -52,11 +48,7 @@ namespace Assets.Scripts.Managers
             }
             TaskSystem.Setup();
             Timer.Duration = 2f;
-            Timer.TimerSetup();
-            Timer.OnTimerEnd = new UnityEvent();
-            Timer.OnTimerEnd.RemoveAllListeners();
-            Timer.OnTimerEnd.AddListener(TaskSystem.ChooseTask);
-            Timer.StartTimer();
+            Timer.TimerSetup(TaskSystem.ChooseTask);
         }
 
         public void Start()

@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Players
 {
-    public class PlayerAttributeManager
+    [CreateAssetMenu(fileName = "Player attributes", menuName = "ScriptableObjects/PlayerAttributeManager", order = 1)]
+    public class PlayerAttributeManager : ScriptableObject
     {
+        [field: SerializeField]
         public float Speed { get; set; }
-        public float Jump { get; set; }
+
+        [field: SerializeField]
+        public float MaxJumpHeight { get; set; }
+
+        [field: SerializeField]
+        public float MaxJumpTime { get; set; }
     }
 }

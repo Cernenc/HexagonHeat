@@ -10,6 +10,7 @@ public class HexagonDrop
 
     public void Drop()
     {
+        Debug.Log("Drop");
         foreach(var drop in Drops)
         {
             drop.gameObject.SetActive(false);
