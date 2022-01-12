@@ -2,9 +2,7 @@
 using Assets.Scripts.RulesSet;
 using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
 {
@@ -28,8 +26,13 @@ namespace Assets.Scripts.Managers
 
         private void HandleTaskEnd()
         {
+            CheckPlayerLoss();
             Timer.Duration = 2f;
             Timer.TimerSetup(NextRound);
+        }
+
+        private void CheckPlayerLoss()
+        {
         }
 
         private void Reset()

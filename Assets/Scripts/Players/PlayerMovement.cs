@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Environment.Physics;
-using Assets.Scripts.Managers;
+﻿using Assets.Scripts.Managers;
 using Assets.Scripts.Players.Interfaces;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace Assets.Scripts.Players
         private float _gravity = -9.8f;
         private float _groundedGravity = -0.5f;
         private float _initialJumpVelocity;
-
+        
         [field: SerializeField]
         public PlayerAttributeManager AttributeManager { get; set; }
 
@@ -21,7 +20,6 @@ namespace Assets.Scripts.Players
         {
             PlayerManager manager = FindObjectOfType<PlayerManager>();
             manager.Player = this;
-
             float timeToApex = AttributeManager.MaxJumpTime / 2;
             _gravity = (-2 * AttributeManager.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
             _initialJumpVelocity = (2 * AttributeManager.MaxJumpHeight) / timeToApex;

@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Timer
 {
@@ -7,6 +9,9 @@ namespace Assets.Scripts.Timer
     {
         [field: SerializeField]
         public float Duration = 2f;
+
+        [field: SerializeField]
+        public Text CountdownInformation { get; set; }
 
         public UnityEvent OnTimerEnd { get; set; } = null;
 
@@ -47,7 +52,13 @@ namespace Assets.Scripts.Timer
             if (TimerIsStarting)
             {
                 _timer.Tick(Time.deltaTime);
+                ShowTimer();
             }
+        }
+
+        private void ShowTimer()
+        {
+            CountdownInformation.text = _timer.RemainingSeconds.ToString("0.00");
         }
     }
 }

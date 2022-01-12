@@ -586,10 +586,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Environment\EnvironmentCheck.cs" />
-    <Compile Include="Assets\Scripts\Environment\Physics\Gravity.cs" />
     <Compile Include="Assets\Scripts\HexagonGame\HexagonDrop.cs" />
-    <Compile Include="Assets\Scripts\Hexagons\CachedComponent.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexCell.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexGrid.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexMesh.cs" />
@@ -602,7 +599,7 @@
     <Compile Include="Assets\Scripts\Players\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerAttributeManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\RandomGenerator.cs" />
+    <Compile Include="Assets\Scripts\Randoms\RandomGenerator.cs" />
     <Compile Include="Assets\Scripts\RulesSet\IRules.cs" />
     <Compile Include="Assets\Scripts\RulesSet\RuleSet.cs" />
     <Compile Include="Assets\Scripts\RulesSet\RuleSetBehaviour.cs" />

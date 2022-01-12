@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GroundSpeed>k__BackingField: 15
   <AirSpeed>k__BackingField: 7
-  <MaxJumpHeight>k__BackingField: 7
+  <MaxJumpHeight>k__BackingField: 5
   <MaxJumpTime>k__BackingField: 0.5
