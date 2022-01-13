@@ -3,7 +3,9 @@ using Assets.Scripts.Players.Interfaces;
 using Assets.Scripts.RulesSet;
 using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
 {
@@ -19,17 +21,16 @@ namespace Assets.Scripts.Managers
         public HexGrid Grid { get; set; }
         public HexagonDrop Drop { get; set; }
         public TimerBehaviour Timer { get; private set; }
-
-        public IPlayer[] NumberOfActivePlayers { get; set; }
+        public List<IPlayer> NumberOfLostPlayers { get; set; }
 
         private void Awake()
         {
             Reset();
         }
+
         public void Start()
         {
-            NumberOfActivePlayers = new IPlayer[1];
-            NumberOfActivePlayers[0] = playerManager.Player;
+            NumberOfLostPlayers = new List<IPlayer>();
             Timer = FindObjectOfType<TimerBehaviour>();
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
@@ -38,14 +39,14 @@ namespace Assets.Scripts.Managers
 
         private void HandleTaskEnd()
         {
-            CheckPlayerLoss();
             Timer.Duration = 2f;
             Timer.TimerSetup(NextRound);
         }
 
-        private void CheckPlayerLoss()
+        public void HandleFallenPlayer(IPlayer player)
         {
-
+            NumberOfLostPlayers.Add(player);
+            Debug.Log(NumberOfLostPlayers.Count);
         }
 
         private void Reset()
