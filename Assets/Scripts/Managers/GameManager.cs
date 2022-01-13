@@ -5,7 +5,6 @@ using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
 {
@@ -19,7 +18,7 @@ namespace Assets.Scripts.Managers
 
         [field: SerializeField]
         public HexGrid Grid { get; set; }
-        public HexagonDrop Drop { get; set; }
+        public HexagonGameBehaviour HexagonBehaviour { get; set; }
         public TimerBehaviour Timer { get; private set; }
         public List<IPlayer> NumberOfLostPlayers { get; set; }
 
@@ -34,9 +33,25 @@ namespace Assets.Scripts.Managers
             Timer = FindObjectOfType<TimerBehaviour>();
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
+            StartMatch();
+        }
+
+        private void StartMatch()
+        {
+            foreach(var player in NumberOfLostPlayers)
+            {
+                player.Controller.transform.position = new Vector3(0, 3.3f, 0);
+            }
             RuleSet.ShuffleAndRun();
         }
 
+        private void Reset()
+        {
+            HexagonBehaviour = new HexagonGameBehaviour();
+            HexagonBehaviour.FieldsToDrop = new System.Collections.Generic.HashSet<HexCell>();
+            HexagonBehaviour.OnHexDrop += HandleTaskEnd;
+        }
+        
         private void HandleTaskEnd()
         {
             Timer.Duration = 2f;
@@ -46,14 +61,7 @@ namespace Assets.Scripts.Managers
         public void HandleFallenPlayer(IPlayer player)
         {
             NumberOfLostPlayers.Add(player);
-            Debug.Log(NumberOfLostPlayers.Count);
-        }
-
-        private void Reset()
-        {
-            Drop = new HexagonDrop();
-            Drop.Drops = new System.Collections.Generic.HashSet<HexCell>();
-            Drop.OnHexDrop += HandleTaskEnd;
+            CheckLastPlayer();
         }
 
         private void NextRound()
@@ -66,6 +74,22 @@ namespace Assets.Scripts.Managers
             TaskSystem.Setup();
             Timer.Duration = 2f;
             Timer.TimerSetup(TaskSystem.ChooseTask);
-        }        
+        }
+
+        private void CheckLastPlayer()
+        {
+            if(NumberOfLostPlayers.Count != 1)
+            {
+                NextRound();
+                return;
+            }
+
+            EndMatch();
+        }
+
+        private void EndMatch()
+        {
+            StartMatch();
+        }
     }
 }
