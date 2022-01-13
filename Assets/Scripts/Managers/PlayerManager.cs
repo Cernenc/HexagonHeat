@@ -8,7 +8,6 @@ namespace Assets.Scripts.Managers
     {
         public IPlayer Player { get; set; }
 
-        //public UnityEvent<float, float> OnMoveInput { get; set; }
         public MoveEvent OnMoveInput { get; set; }
         public UnityEvent OnJumpInput { get; set; }
 

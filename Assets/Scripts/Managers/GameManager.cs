@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Hexagons;
+using Assets.Scripts.Players.Interfaces;
 using Assets.Scripts.RulesSet;
 using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
@@ -19,9 +20,20 @@ namespace Assets.Scripts.Managers
         public HexagonDrop Drop { get; set; }
         public TimerBehaviour Timer { get; private set; }
 
+        public IPlayer[] NumberOfActivePlayers { get; set; }
+
         private void Awake()
         {
             Reset();
+        }
+        public void Start()
+        {
+            NumberOfActivePlayers = new IPlayer[1];
+            NumberOfActivePlayers[0] = playerManager.Player;
+            Timer = FindObjectOfType<TimerBehaviour>();
+            RuleSet.gameManager = this;
+            TaskSystem.gameManager = this;
+            RuleSet.ShuffleAndRun();
         }
 
         private void HandleTaskEnd()
@@ -33,6 +45,7 @@ namespace Assets.Scripts.Managers
 
         private void CheckPlayerLoss()
         {
+
         }
 
         private void Reset()
@@ -52,14 +65,6 @@ namespace Assets.Scripts.Managers
             TaskSystem.Setup();
             Timer.Duration = 2f;
             Timer.TimerSetup(TaskSystem.ChooseTask);
-        }
-
-        public void Start()
-        {
-            Timer = FindObjectOfType<TimerBehaviour>();
-            RuleSet.gameManager = this;
-            TaskSystem.gameManager = this;
-            RuleSet.ShuffleAndRun();
-        }
+        }        
     }
 }
