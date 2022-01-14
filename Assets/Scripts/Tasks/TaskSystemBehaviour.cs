@@ -9,8 +9,6 @@ namespace Assets.Scripts.Tasks
 {
     public class TaskSystemBehaviour : MonoBehaviour
     {
-        private HexagonGameBehaviour _drop = null;
-
         [SerializeField]
         private HexGrid _grid = null;
         private TaskSystem TaskSystem { get; set; }
@@ -39,8 +37,8 @@ namespace Assets.Scripts.Tasks
 
         private void HandleChosenTask()
         {
-            _drop = gameManager.HexagonBehaviour;
-            _drop.FieldsToDrop = new HashSet<HexCell>();
+            HexagonManagement hex = gameManager.Hex;
+            hex.FieldsToDrop = new HashSet<HexCell>();
 
             TaskSystem.Temps.ForEach(item => TaskSystem.CellsToDrop.Add(item));
             
@@ -51,12 +49,12 @@ namespace Assets.Scripts.Tasks
 
             foreach(var duplicate in duplicates)
             {
-                _drop.FieldsToDrop.Add(duplicate);
+                hex.FieldsToDrop.Add(duplicate);
             }
 
             Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 2f;
-            timer.TimerSetup(_drop.Drop);
+            timer.TimerSetup(hex.Drop);
 
             OnTaskChosen.Invoke();
         }

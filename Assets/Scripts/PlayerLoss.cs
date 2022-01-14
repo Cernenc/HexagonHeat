@@ -14,7 +14,6 @@ namespace Assets.Scripts
         private void OnTriggerEnter(Collider other)
         {
             var player = other.GetComponent<IPlayer>();
-            Debug.Log(player);
             _gameManager.playerManager.OnPlayerHasFallen.Invoke(player);
         }
     }

@@ -36,6 +36,11 @@ namespace Assets.Scripts.Timer
             StartTimer();
         }
 
+        public void RemoveListeners()
+        {
+            OnTimerEnd.RemoveAllListeners();
+        }
+
         private void HandleTimerEnd()
         {
             TimerIsStarting = false;

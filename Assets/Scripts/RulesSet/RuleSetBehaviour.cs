@@ -41,7 +41,7 @@ namespace Assets.Scripts.RulesSet
             OnChooseRuleSet.Invoke();
         }
 
-        public void ShuffleAndRun()
+        public void Shuffle()
         {
             RuleSet.ShuffleRuleSet();
         }

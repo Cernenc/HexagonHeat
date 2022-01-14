@@ -5,6 +5,7 @@ using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
 {
@@ -18,78 +19,86 @@ namespace Assets.Scripts.Managers
 
         [field: SerializeField]
         public HexGrid Grid { get; set; }
-        public HexagonGameBehaviour HexagonBehaviour { get; set; }
-        public TimerBehaviour Timer { get; private set; }
-        public List<IPlayer> NumberOfLostPlayers { get; set; }
 
-        private void Awake()
-        {
-            Reset();
-        }
+        public HexagonManagement Hex { get; set; }
+        public TimerBehaviour Timer { get; private set; }
+        public List<IPlayer> TotalNumberOfFallenPlayers { get; set; }
 
         public void Start()
         {
-            NumberOfLostPlayers = new List<IPlayer>();
+            TotalNumberOfFallenPlayers = new List<IPlayer>();
             Timer = FindObjectOfType<TimerBehaviour>();
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
-            StartMatch();
+            SetHex();
+            NewMatch();
         }
 
-        private void StartMatch()
+        private void SetHex()
         {
-            foreach(var player in NumberOfLostPlayers)
-            {
-                player.Controller.transform.position = new Vector3(0, 3.3f, 0);
-            }
-            RuleSet.ShuffleAndRun();
+            Hex = new HexagonManagement();
+            Hex.FieldsToDrop = new HashSet<HexCell>();
+            Hex.OnHexDrop += CheckLastPlayerRemaining;
         }
 
-        private void Reset()
+        private void NewMatch()
         {
-            HexagonBehaviour = new HexagonGameBehaviour();
-            HexagonBehaviour.FieldsToDrop = new System.Collections.Generic.HashSet<HexCell>();
-            HexagonBehaviour.OnHexDrop += HandleTaskEnd;
-        }
-        
-        private void HandleTaskEnd()
-        {
-            Timer.Duration = 2f;
-            Timer.TimerSetup(NextRound);
+            RuleSet.Shuffle();
         }
 
-        public void HandleFallenPlayer(IPlayer player)
+        private void NewRound()
         {
-            NumberOfLostPlayers.Add(player);
-            CheckLastPlayer();
-        }
-
-        private void NextRound()
-        {
-            Reset();
+            SetHex();
             foreach (var cell in Grid.Cells)
             {
                 cell.gameObject.SetActive(true);
             }
+
             TaskSystem.Setup();
-            Timer.Duration = 2f;
-            Timer.TimerSetup(TaskSystem.ChooseTask);
+            SetTimer(2f, TaskSystem.ChooseTask);
         }
 
-        private void CheckLastPlayer()
+        private void SetTimer(float duration, UnityAction action)
         {
-            if(NumberOfLostPlayers.Count != 1)
+            Timer.Duration = duration;
+            Timer.TimerSetup(action);
+        }
+
+        private void CheckLastPlayerRemaining()
+        {
+            if(TotalNumberOfFallenPlayers.Count == 1)
             {
-                NextRound();
+                EndMatch();
                 return;
             }
 
-            EndMatch();
+            NextRound();
         }
 
         private void EndMatch()
         {
-            StartMatch();
+            //distribute points to player
+            //go to new match
+            Debug.Log("End");
+            foreach (var cell in Grid.Cells)
+            {
+                cell.gameObject.SetActive(true);
+            }
+            Timer.RemoveListeners();
+            playerManager.Player.Controller.transform.position = playerManager.PlayerPos;
+            Debug.Log(playerManager.Player.Controller.transform.position);
+        }
+
+        public void HandleFallenPlayer(IPlayer player)
+        {
+            TotalNumberOfFallenPlayers.Add(player);
+            CheckLastPlayerRemaining();
+        }
+
+        private void NextRound()
+        {
+            Timer.Duration = 5f;
+            Timer.TimerSetup(NewRound);
         }
     }
 }

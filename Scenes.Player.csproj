@@ -586,7 +586,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\HexagonGame\HexagonGameBehaviour.cs" />
+    <Compile Include="Assets\Scripts\HexagonGame\HexagonManagement.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexCell.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexGrid.cs" />
     <Compile Include="Assets\Scripts\Hexagons\HexMesh.cs" />

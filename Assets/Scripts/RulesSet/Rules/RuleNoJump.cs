@@ -4,8 +4,7 @@
     {
         public void Rule()
         {
-            //UnityEngine.Debug.Log("RuleJump");
-
+            UnityEngine.Debug.Log("RuleJump");
         }
     }
 }
