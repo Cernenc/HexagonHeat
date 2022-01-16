@@ -5,6 +5,7 @@
         public void Rule()
         {
             UnityEngine.Debug.Log("RuleJump");
+            RulesRestrict.CanJump = false;
         }
     }
 }

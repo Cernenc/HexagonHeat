@@ -1,14 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.RulesSet;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
     public class InputManager : GameBehaviour
     {
-        private void Awake()
-        {
-
-        }
-
         private void Update()
         {
             MovementInput();
@@ -25,7 +21,7 @@ namespace Assets.Scripts.Managers
 
         public void JumpInput()
         {
-            if (Input.GetButtonDown("Jump") && playerManager.Player.Controller.isGrounded)
+            if (Input.GetButtonDown("Jump") && playerManager.Player.Controller.isGrounded && RulesRestrict.CanJump)
             {
                 playerManager.OnJumpInput.Invoke();
             }

@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class HexagonManagement
 {
-    public HashSet<HexCell> FieldsToDrop { get; set; }
+    private HashSet<HexCell> FieldsToDrop { get; set; }
     public Action OnHexDrop { get; set; }
+
+    public HexagonManagement()
+    {
+        FieldsToDrop = new HashSet<HexCell>();
+    }
 
     public void Drop()
     {
@@ -17,5 +22,20 @@ public class HexagonManagement
         }
 
         OnHexDrop?.Invoke();
+    }
+    public void AddFieldsToDrop(IEnumerable<HexCell> hexCells)
+    {
+        foreach(var cell in hexCells)
+        {
+            FieldsToDrop.Add(cell);
+        }
+    }
+
+    public void ResetPlatforms()
+    {
+        foreach(var drop in FieldsToDrop)
+        {
+            drop.gameObject.SetActive(true);
+        }
     }
 }

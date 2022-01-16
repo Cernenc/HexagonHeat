@@ -37,7 +37,6 @@ namespace Assets.Scripts.Managers
         private void SetHex()
         {
             Hex = new HexagonManagement();
-            Hex.FieldsToDrop = new HashSet<HexCell>();
             Hex.OnHexDrop += CheckLastPlayerRemaining;
         }
 
@@ -49,10 +48,7 @@ namespace Assets.Scripts.Managers
         private void NewRound()
         {
             SetHex();
-            foreach (var cell in Grid.Cells)
-            {
-                cell.gameObject.SetActive(true);
-            }
+            Hex.ResetPlatforms();
 
             TaskSystem.Setup();
             SetTimer(2f, TaskSystem.ChooseTask);
@@ -60,6 +56,7 @@ namespace Assets.Scripts.Managers
 
         private void SetTimer(float duration, UnityAction action)
         {
+            Timer.RemoveListeners();
             Timer.Duration = duration;
             Timer.TimerSetup(action);
         }
@@ -80,13 +77,9 @@ namespace Assets.Scripts.Managers
             //distribute points to player
             //go to new match
             Debug.Log("End");
-            foreach (var cell in Grid.Cells)
-            {
-                cell.gameObject.SetActive(true);
-            }
-            Timer.RemoveListeners();
-            playerManager.Player.Controller.transform.position = playerManager.PlayerPos;
-            Debug.Log(playerManager.Player.Controller.transform.position);
+
+            Hex.ResetPlatforms();
+            SetTimer(3f, NewMatch);
         }
 
         public void HandleFallenPlayer(IPlayer player)

@@ -38,7 +38,6 @@ namespace Assets.Scripts.Tasks
         private void HandleChosenTask()
         {
             HexagonManagement hex = gameManager.Hex;
-            hex.FieldsToDrop = new HashSet<HexCell>();
 
             TaskSystem.Temps.ForEach(item => TaskSystem.CellsToDrop.Add(item));
             
@@ -47,10 +46,7 @@ namespace Assets.Scripts.Tasks
                 .Where(g => g.Count() > 1)
                 .Select(g => g.Key);
 
-            foreach(var duplicate in duplicates)
-            {
-                hex.FieldsToDrop.Add(duplicate);
-            }
+            hex.AddFieldsToDrop(duplicates);
 
             Timer.TimerBehaviour timer = gameManager.Timer;
             timer.Duration = 2f;

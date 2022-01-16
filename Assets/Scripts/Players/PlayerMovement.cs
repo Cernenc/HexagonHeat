@@ -33,6 +33,7 @@ namespace Assets.Scripts.Players
         public void Update()
         {
             Controller.Move(_currentMovement * Time.deltaTime);
+
             HandlePlayerGravity();
         }
 
