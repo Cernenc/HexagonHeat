@@ -79,6 +79,9 @@ namespace Assets.Scripts.Managers
             Debug.Log("End");
 
             Hex.ResetPlatforms();
+            playerManager.Player.Controller.enabled = false;
+            playerManager.Player.Controller.transform.position = new Vector3(0, 3.3f, 0);
+            playerManager.Player.Controller.enabled = true;
             SetTimer(3f, NewMatch);
         }
 

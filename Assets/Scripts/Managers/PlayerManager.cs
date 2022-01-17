@@ -9,7 +9,6 @@ namespace Assets.Scripts.Managers
     public class PlayerManager : GameBehaviour
     {
         public IPlayer Player { get; set; }
-        public Vector3 PlayerPos { get; set; }
 
         public MoveEvent OnMoveInput { get; set; }
         public UnityEvent OnJumpInput { get; set; }
@@ -25,8 +24,6 @@ namespace Assets.Scripts.Managers
 
             OnPlayerHasFallen = new FallenPlayerEvent();
             OnPlayerHasFallen.AddListener(gameManager.HandleFallenPlayer);
-
-            PlayerPos = Player.Controller.transform.position;
         }
     }
 }
