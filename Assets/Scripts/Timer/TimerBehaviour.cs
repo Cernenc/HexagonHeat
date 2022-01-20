@@ -10,6 +10,7 @@ namespace Assets.Scripts.Timer
         [field: SerializeField]
         public float Duration = 2f;
 
+        private Text _countdownLabel = null;
         [field: SerializeField]
         public Text CountdownInformation { get; set; }
 
@@ -23,6 +24,8 @@ namespace Assets.Scripts.Timer
         {
             TimerSetup();
             TimerIsStarting = false;
+            _countdownLabel = Instantiate<Text>(CountdownInformation);
+            _countdownLabel.rectTransform.SetParent(GetComponentInChildren<Canvas>().gameObject.transform, false);
         }
 
         public void TimerSetup(UnityAction action = null)
@@ -63,7 +66,7 @@ namespace Assets.Scripts.Timer
 
         private void ShowTimer()
         {
-            CountdownInformation.text = _timer.RemainingSeconds.ToString("0.00");
+            _countdownLabel.text = _timer.RemainingSeconds.ToString("0.00");
         }
     }
 }

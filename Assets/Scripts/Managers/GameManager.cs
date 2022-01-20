@@ -3,6 +3,7 @@ using Assets.Scripts.Players.Interfaces;
 using Assets.Scripts.RulesSet;
 using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,7 +32,12 @@ namespace Assets.Scripts.Managers
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
             SetHex();
-            NewMatch();
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            SetTimer(1f, NewMatch);
         }
 
         private void SetHex()
@@ -47,9 +53,8 @@ namespace Assets.Scripts.Managers
 
         private void NewRound()
         {
-            SetHex();
             Hex.ResetPlatforms();
-
+            SetHex();
             TaskSystem.Setup();
             SetTimer(2f, TaskSystem.ChooseTask);
         }
@@ -77,8 +82,8 @@ namespace Assets.Scripts.Managers
             //distribute points to player
             //go to new match
             Debug.Log("End");
-
             Hex.ResetPlatforms();
+            SetHex();
             playerManager.Player.Controller.enabled = false;
             playerManager.Player.Controller.transform.position = new Vector3(0, 3.3f, 0);
             playerManager.Player.Controller.enabled = true;
