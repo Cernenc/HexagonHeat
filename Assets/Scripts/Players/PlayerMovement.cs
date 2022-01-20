@@ -32,6 +32,10 @@ namespace Assets.Scripts.Players
 
         public void Update()
         {
+            if (RulesSet.RulesRestrict.HasConstantMove)
+            {
+                _currentMovement += transform.TransformDirection(Vector3.forward);
+            }
             Controller.Move(_currentMovement * Time.deltaTime);
 
             HandlePlayerGravity();
