@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Players.Interfaces;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Managers
