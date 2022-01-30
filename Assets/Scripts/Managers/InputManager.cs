@@ -21,14 +21,16 @@ namespace Assets.Scripts.Managers
 
             if (RulesRestrict.HasConstantMove)
             {
-                if(horizontal < 0 && vertical == 0) { _constHorizontal = -1; _constVertical = 0; }
-                if(horizontal > 0 && vertical == 0) { _constHorizontal = 1; _constVertical = 0; }
-                if(vertical < 0 && horizontal == 0) { _constVertical = -1; _constHorizontal = 0; }
-                if(vertical > 0 && horizontal == 0) { _constVertical = 1; _constHorizontal = 0; }
-                if(vertical > 0 && horizontal > 0) { _constVertical = 1; _constHorizontal = 1; }
-                if(vertical > 0 && horizontal < 0) { _constVertical = 1; _constHorizontal = -1; }
-                if(vertical < 0 && horizontal < 0) { _constVertical = -1; _constHorizontal = -1; }
-                if(vertical < 0 && horizontal > 0) { _constVertical = -1; _constHorizontal = 1; }
+                _constHorizontal = horizontal > 0 && horizontal != 0 ? 1 : -1;
+                _constVertical = vertical > 0 && vertical != 0 ? 1 : -1;
+                //if(horizontal < 0 && vertical == 0) { _constHorizontal = -1; _constVertical = 0; }
+                //if(horizontal > 0 && vertical == 0) { _constHorizontal = 1; _constVertical = 0; }
+                //if(vertical < 0 && horizontal == 0) { _constVertical = -1; _constHorizontal = 0; }
+                //if(vertical > 0 && horizontal == 0) { _constVertical = 1; _constHorizontal = 0; }
+                //if(vertical > 0 && horizontal > 0) { _constVertical = 1; _constHorizontal = 1; }
+                //if(vertical > 0 && horizontal < 0) { _constVertical = 1; _constHorizontal = -1; }
+                //if(vertical < 0 && horizontal < 0) { _constVertical = -1; _constHorizontal = -1; }
+                //if(vertical < 0 && horizontal > 0) { _constVertical = -1; _constHorizontal = 1; }
 
                 playerManager.OnMoveInput.Invoke(_constHorizontal, _constVertical);
                 return;

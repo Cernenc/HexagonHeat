@@ -8,7 +8,6 @@ namespace Assets.Scripts.Managers
     public class PlayerManager : GameBehaviour
     {
         public IPlayer Player { get; set; }
-
         public MoveEvent OnMoveInput { get; set; }
         public UnityEvent OnJumpInput { get; set; }
         public FallenPlayerEvent OnPlayerHasFallen { get; set; }

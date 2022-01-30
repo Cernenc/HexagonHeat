@@ -27,7 +27,7 @@ namespace Assets.Scripts.Hexagons {
         {
             HexCellCanvas = GetComponentInChildren<Canvas>();
             HexMeshProp = GetComponentInChildren<HexMesh>();
-            //CreateHex();
+            CreateHex();
         }
 
         private void CreateHex()
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Hexagons {
 
         private void Start()
         {
-            //CreateMeshes();
+            CreateMeshes();
         }
 
         private void CreateMeshes()

@@ -29,6 +29,7 @@ namespace Assets.Scripts.Managers
             Timer = FindObjectOfType<TimerBehaviour>();
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
+            GameSetup();
         }
 
         private void GameSetup()

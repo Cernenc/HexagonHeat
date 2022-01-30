@@ -9,15 +9,11 @@ namespace Assets.Scripts.Timer
     {
         [field: SerializeField]
         public float Duration = 2f;
-
         private Text _countdownLabel = null;
         [field: SerializeField]
         public Text CountdownInformation { get; set; }
-
         public UnityEvent OnTimerEnd { get; set; } = null;
-
         private bool TimerIsStarting { get; set; }
-
         private Timer _timer = null;
 
         private void Start()
@@ -25,8 +21,9 @@ namespace Assets.Scripts.Timer
             TimerSetup();
             TimerIsStarting = false;
             _countdownLabel = Instantiate<Text>(CountdownInformation);
-            _countdownLabel.gameObject.SetActive(false);
+            //_countdownLabel.gameObject.SetActive(false);
             _countdownLabel.rectTransform.SetParent(GetComponentInChildren<Canvas>().gameObject.transform, false);
+            StartTimer();
         }
 
         public void TimerSetup(UnityAction action = null)
