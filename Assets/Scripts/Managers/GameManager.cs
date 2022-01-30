@@ -3,7 +3,6 @@ using Assets.Scripts.Players.Interfaces;
 using Assets.Scripts.RulesSet;
 using Assets.Scripts.Tasks;
 using Assets.Scripts.Timer;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,7 +19,6 @@ namespace Assets.Scripts.Managers
 
         [field: SerializeField]
         public HexGrid Grid { get; set; }
-
         public HexagonManagement Hex { get; set; }
         public TimerBehaviour Timer { get; private set; }
         public List<IPlayer> TotalNumberOfFallenPlayers { get; set; }
@@ -31,6 +29,10 @@ namespace Assets.Scripts.Managers
             Timer = FindObjectOfType<TimerBehaviour>();
             RuleSet.gameManager = this;
             TaskSystem.gameManager = this;
+        }
+
+        private void GameSetup()
+        {
             SetHex();
             StartGame();
         }
@@ -42,18 +44,22 @@ namespace Assets.Scripts.Managers
 
         private void SetHex()
         {
+            if(Hex != null)
+            {
+                Hex.ResetPlatforms();
+            }
             Hex = new HexagonManagement();
             Hex.OnHexDrop += CheckLastPlayerRemaining;
         }
 
         private void NewMatch()
         {
+            TaskSystem.Setup();
             RuleSet.Shuffle();
         }
 
         private void NewRound()
         {
-            Hex.ResetPlatforms();
             SetHex();
             TaskSystem.Setup();
             SetTimer(2f, TaskSystem.ChooseTask);
@@ -70,11 +76,11 @@ namespace Assets.Scripts.Managers
         {
             if(TotalNumberOfFallenPlayers.Count == 1)
             {
+                SetTimer(3f, NewMatch);
                 EndMatch();
                 return;
             }
-
-            NextRound();
+            SetTimer(3f, NewRound);
         }
 
         private void EndMatch()
@@ -82,12 +88,10 @@ namespace Assets.Scripts.Managers
             //distribute points to player
             //go to new match
             Debug.Log("End");
-            Hex.ResetPlatforms();
             SetHex();
             playerManager.Player.Controller.enabled = false;
             playerManager.Player.Controller.transform.position = new Vector3(0, 3.3f, 0);
             playerManager.Player.Controller.enabled = true;
-            SetTimer(3f, NewMatch);
         }
 
         public void HandleFallenPlayer(IPlayer player)

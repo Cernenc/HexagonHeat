@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937d21b7ccbd6cd418ac92c50478e814, type: 3}
   m_Name: Player attributes
   m_EditorClassIdentifier: 
-  <GroundSpeed>k__BackingField: 15
+  <GroundSpeed>k__BackingField: 25
   <AirSpeed>k__BackingField: 7
   <MaxJumpHeight>k__BackingField: 5
   <MaxJumpTime>k__BackingField: 0.5

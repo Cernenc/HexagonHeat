@@ -25,6 +25,7 @@ namespace Assets.Scripts.Timer
             TimerSetup();
             TimerIsStarting = false;
             _countdownLabel = Instantiate<Text>(CountdownInformation);
+            _countdownLabel.gameObject.SetActive(false);
             _countdownLabel.rectTransform.SetParent(GetComponentInChildren<Canvas>().gameObject.transform, false);
         }
 
@@ -36,7 +37,6 @@ namespace Assets.Scripts.Timer
             OnTimerEnd = new UnityEvent();
             OnTimerEnd.RemoveAllListeners();
             OnTimerEnd.AddListener(action);
-            StartTimer();
         }
 
         public void RemoveListeners()

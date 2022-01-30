@@ -30,6 +30,7 @@ namespace Assets.Scripts.Tasks
             }
 
             var chosenTasks = ModifiedTasks();
+
             foreach (var task in chosenTasks)
             {
                 task.Task(Grid.Cells, CellsToDrop, ref Temps);

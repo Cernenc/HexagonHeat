@@ -27,8 +27,12 @@ namespace Assets.Scripts.Hexagons {
         {
             HexCellCanvas = GetComponentInChildren<Canvas>();
             HexMeshProp = GetComponentInChildren<HexMesh>();
-            Cells = new HexCell[7];
+            //CreateHex();
+        }
 
+        private void CreateHex()
+        {
+            Cells = new HexCell[7];
             CreateCell(0, 0, 0);
             CreateCell(1, 1, 0);
             CreateCell(2, -1, 0);
@@ -40,7 +44,12 @@ namespace Assets.Scripts.Hexagons {
 
         private void Start()
         {
-            foreach(var cell in Cells)
+            //CreateMeshes();
+        }
+
+        private void CreateMeshes()
+        {
+            foreach (var cell in Cells)
             {
                 HexMeshProp.Triangulate(cell);
             }
